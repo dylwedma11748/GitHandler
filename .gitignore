@@ -1,3 +1,6 @@
+# JFrame or JDialog forms
+*.form
+
 # Compiled class file
 *.class
 
