@@ -1,7 +1,7 @@
 # GitHandler
 A Java library for handling GitHub repositories
 
-This project can either be used as a library for your Java projects or as a standalone application.
+GitHandler can either be used as a library for your Java projects or as a standalone application.
 
 GitHandler was developed and tested on Windows, but there shouldn't be any reason why you can use this program on Mac/Linux.
 
