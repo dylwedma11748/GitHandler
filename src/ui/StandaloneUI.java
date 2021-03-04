@@ -76,8 +76,6 @@ public class StandaloneUI extends JFrame {
         setAlwaysOnTop(true);
         setResizable(false);
 
-        RepoField.setText("https://github.com/CTCaer/hekate/releases");
-
         RepoFieldLabel.setText("Repository URL:");
 
         Git.setText("Git");
