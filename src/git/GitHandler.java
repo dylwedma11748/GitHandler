@@ -46,6 +46,18 @@ public class GitHandler {
     private static final ArrayList<Release> RELEASES = new ArrayList<>();
 
     /**
+     * Returns the latest release of the specified GitHub repository.
+     *
+     * @param gitURL The URL of the repository; this must be either the URL of
+     * the repository or the URL of the repository's releases page.
+     * @return the latest release of the specified GitHub repository.
+     * @see git.Release
+     */
+    public static Release generateLatestRelease(String gitURL) {
+        return generateReleases(gitURL).get(0);
+    }
+
+    /**
      * Returns an ArrayList of releases for the specified GitHub repository.
      *
      * @param gitURL The URL of the repository; this must be either the URL of
@@ -60,6 +72,7 @@ public class GitHandler {
      *
      * @return an ArrayList of releases for the specified GitHub repository
      * @see git.Release
+     * @see #generateLatestRelease(String gitURL)
      */
     public static ArrayList<Release> generateReleases(String gitURL) {
         NAMES.clear();
@@ -125,8 +138,7 @@ public class GitHandler {
                         }
                     }
 
-                    Release release = new Release(NAMES.get(releaseIndex), tag, associatingTagAssets);
-                    RELEASES.add(release);
+                    RELEASES.add(new Release(NAMES.get(releaseIndex), tag, associatingTagAssets));
                     releaseIndex++;
                 }
             }
@@ -143,13 +155,16 @@ public class GitHandler {
      * @param asset The asset to be downloaded; This must contain a valid
      * download link.
      * @param destination The destination of where to save the downloaded file
+     * @return the downloaded file
      * @see git.Asset
      */
-    public static void downloadAsset(Asset asset, String destination) {
+    public static File downloadAsset(Asset asset, String destination) {
+        File output = null;
+
         try {
             URL download = new URL(asset.getAssetLink());
 
-            try (BufferedInputStream bis = new BufferedInputStream(download.openStream()); FileOutputStream fos = new FileOutputStream(new File(destination))) {
+            try (BufferedInputStream bis = new BufferedInputStream(download.openStream()); FileOutputStream fos = new FileOutputStream((output = new File(destination)))) {
                 byte[] buffer = new byte[1024];
                 int bytes;
 
@@ -160,5 +175,7 @@ public class GitHandler {
         } catch (IOException ex) {
             Logger.getLogger(GitHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        return output;
     }
 }
