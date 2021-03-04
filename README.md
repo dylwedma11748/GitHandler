@@ -10,11 +10,13 @@ GitHandler was developed and tested on Windows, but there shouldn't be any reaso
 ## Standalone Application Features
 - Sorting of assets by their associated tag.
 - Downloading assets directly from the repository's releases.
+- Option to grab latest release only
 
 ## Using GitHandler Standalone
 - Launch the "GitHandler.jar" file
 - Copy the URL of either the repository's main page or the repository's releases page.
 - Paste the URL into the Repository URL box.
+- (Optional) Select "Get latest release only".
 - Click on the "Git" button.
 - GitHandler will fetch the assets from the latest 10 releases so long as they haven't been archived.
 - Select the tag you wish to download assets from.
