@@ -54,7 +54,7 @@ public class GitHandler {
      * @see git.Release
      */
     public static Release generateLatestRelease(String gitURL) {
-        return generateReleases(gitURL).get(0);
+        return generateReleases(gitURL).get(0); 
     }
 
     /**
@@ -107,7 +107,7 @@ public class GitHandler {
                     }
 
                     for (String tag : TAGS) {
-                        if (line.contains("/download/" + tag)) {
+                        if (line.contains("/download/" + tag) && !line.endsWith("</a></p>")) {
                             String assetName = line.substring(line.indexOf(tag) + tag.length() + 1, line.lastIndexOf("rel") - 2);
                             String assetLink = gitURL + "/download/" + tag + "/" + assetName;
                             ASSETS.add(new Asset(assetName, tag, assetLink));
@@ -132,11 +132,9 @@ public class GitHandler {
                 for (String tag : TAGS) {
                     ArrayList<Asset> associatingTagAssets = new ArrayList<>();
 
-                    for (Asset asset : ASSETS) {
-                        if (asset.getAssociatingTag().equals(tag)) {
-                            associatingTagAssets.add(asset);
-                        }
-                    }
+                    ASSETS.stream().filter((asset) -> (asset.getAssociatingTag().equals(tag))).forEachOrdered((asset) -> {
+                        associatingTagAssets.add(asset);
+                    });
 
                     RELEASES.add(new Release(NAMES.get(releaseIndex), tag, associatingTagAssets));
                     releaseIndex++;
